@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#9A694B">
 
     <title>Délle Doces — Gestão Financeira</title>
 
@@ -14,7 +17,7 @@
 
 <div class="app">
 
-    <!-- SIDEBAR -->
+    <!-- MENU LATERAL -->
     <aside class="sidebar">
 
         <div class="brand">
@@ -30,19 +33,23 @@
         <nav>
 
             <button class="nav active" data-s="dashboard">
-                🏠<br>Início
+                <span>🏠</span>
+                <label>Início</label>
             </button>
 
             <button class="nav" data-s="vendas">
-                🛍️<br>Vendas
+                <span>🛍️</span>
+                <label>Vendas</label>
             </button>
 
             <button class="nav" data-s="produtos">
-                🧁<br>Produtos
+                <span>🧁</span>
+                <label>Produtos</label>
             </button>
 
             <button class="nav" data-s="despesas">
-                💸<br>Despesas
+                <span>💸</span>
+                <label>Despesas</label>
             </button>
 
         </nav>
@@ -53,23 +60,31 @@
     <!-- CONTEÚDO -->
     <main class="main">
 
+        <!-- TOPO -->
         <div class="top">
 
             <div class="title">
 
-                <h2 id="pageTitle">
-                    Visão geral
-                </h2>
+                <div class="mobile-logo">
+                    <img src="logo-referencia.png" alt="Logo">
+                </div>
 
-                <p>
-                    Gestão financeira da Délle Doces
-                </p>
+                <div>
+                    <h2 id="pageTitle">
+                        Visão geral
+                    </h2>
+
+                    <p>
+                        Gestão financeira da Délle Doces
+                    </p>
+                </div>
 
             </div>
 
+
             <div class="month">
 
-                📅
+                <span>📅</span>
 
                 <select id="month"></select>
 
@@ -139,7 +154,7 @@
 
             <div class="grid">
 
-                <div class="panel">
+                <div class="panel chart-panel">
 
                     <div class="head">
 
@@ -184,7 +199,7 @@
                     </h3>
 
                     <button
-                        class="btn primary"
+                        class="btn primary desktop-add"
                         onclick="openSale()">
 
                         + Registrar venda
@@ -291,6 +306,17 @@
 </div>
 
 
+<!-- BOTÃO FLUTUANTE -->
+<button
+    class="floating-btn"
+    onclick="openSale()"
+    aria-label="Registrar venda">
+
+    <span>+</span>
+
+</button>
+
+
 <!-- MODAL VENDA -->
 <div class="modal" id="saleModal">
 
@@ -298,9 +324,10 @@
 
         <div class="boxhead">
 
-            <h3>
-                Registrar venda
-            </h3>
+            <div>
+                <span class="modal-icon">🛍️</span>
+                <h3>Registrar venda</h3>
+            </div>
 
             <button
                 class="close"
@@ -400,7 +427,7 @@
                 <button
                     class="btn primary">
 
-                    Salvar
+                    Salvar venda
 
                 </button>
 
@@ -420,9 +447,10 @@
 
         <div class="boxhead">
 
-            <h3>
-                Novo produto
-            </h3>
+            <div>
+                <span class="modal-icon">🧁</span>
+                <h3>Novo produto</h3>
+            </div>
 
             <button
                 class="close"
@@ -441,10 +469,11 @@
 
                 <div class="field full">
 
-                    <label>Nome</label>
+                    <label>Nome do produto</label>
 
                     <input
                         id="prodName"
+                        placeholder="Ex.: Bolo de chocolate"
                         required>
 
                 </div>
@@ -461,6 +490,7 @@
                         type="number"
                         step="0.01"
                         min="0"
+                        placeholder="0,00"
                         required>
 
                 </div>
@@ -477,6 +507,7 @@
                         type="number"
                         step="0.01"
                         min="0"
+                        placeholder="0,00"
                         required>
 
                 </div>
@@ -498,7 +529,7 @@
                 <button
                     class="btn primary">
 
-                    Salvar
+                    Salvar produto
 
                 </button>
 
@@ -518,9 +549,10 @@
 
         <div class="boxhead">
 
-            <h3>
-                Nova despesa
-            </h3>
+            <div>
+                <span class="modal-icon">💸</span>
+                <h3>Nova despesa</h3>
+            </div>
 
             <button
                 class="close"
@@ -575,6 +607,7 @@
 
                     <input
                         id="expDesc"
+                        placeholder="Ex.: Compra de chocolate"
                         required>
 
                 </div>
@@ -610,7 +643,7 @@
                 <button
                     class="btn primary">
 
-                    Salvar
+                    Salvar despesa
 
                 </button>
 
