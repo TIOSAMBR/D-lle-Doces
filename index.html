@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Délle Doces — Gestão Financeira</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <img src="logo-referencia.png" alt="Délle Doces">
+
+            <h1>Délle doces</h1>
+
+            <small>POR DÉBORA MENDES</small>
+
+        </div>
+
+        <nav>
+
+            <button class="nav active" data-s="dashboard">
+                🏠<br>Início
+            </button>
+
+            <button class="nav" data-s="vendas">
+                🛍️<br>Vendas
+            </button>
+
+            <button class="nav" data-s="produtos">
+                🧁<br>Produtos
+            </button>
+
+            <button class="nav" data-s="despesas">
+                💸<br>Despesas
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTEÚDO -->
+    <main class="main">
+
+        <div class="top">
+
+            <div class="title">
+
+                <h2 id="pageTitle">
+                    Visão geral
+                </h2>
+
+                <p>
+                    Gestão financeira da Délle Doces
+                </p>
+
+            </div>
+
+            <div class="month">
+
+                📅
+
+                <select id="month"></select>
+
+            </div>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+        <section id="dashboard" class="section active">
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <span class="icon">💰</span>
+
+                    <small>Faturamento</small>
+
+                    <strong id="revenue">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="icon">💸</span>
+
+                    <small>Despesas</small>
+
+                    <strong id="expenses">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="icon">🌿</span>
+
+                    <small>Lucro líquido</small>
+
+                    <strong id="profit">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="card">
+
+                    <span class="icon">🧁</span>
+
+                    <small>Itens vendidos</small>
+
+                    <strong id="items">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <div class="panel">
+
+                    <div class="head">
+
+                        <h3>
+                            Faturamento por dia
+                        </h3>
+
+                        <span class="tag" id="margin">
+                            Margem 0%
+                        </span>
+
+                    </div>
+
+                    <div class="chart" id="chart"></div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="head">
+
+                        <h3>
+                            Resumo do mês
+                        </h3>
+
+                    </div>
+
+                    <div class="summary" id="summary"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="head">
+
+                    <h3>
+                        Últimas vendas
+                    </h3>
+
+                    <button
+                        class="btn primary"
+                        onclick="openSale()">
+
+                        + Registrar venda
+
+                    </button>
+
+                </div>
+
+                <div id="recent"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VENDAS -->
+        <section id="vendas" class="section">
+
+            <div class="panel">
+
+                <div class="head">
+
+                    <h3>
+                        Vendas
+                    </h3>
+
+                    <button
+                        class="btn primary"
+                        onclick="openSale()">
+
+                        + Nova venda
+
+                    </button>
+
+                </div>
+
+                <div id="salesTable"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUTOS -->
+        <section id="produtos" class="section">
+
+            <div class="panel">
+
+                <div class="head">
+
+                    <h3>
+                        Produtos e margem
+                    </h3>
+
+                    <button
+                        class="btn primary"
+                        onclick="openProduct()">
+
+                        + Novo produto
+
+                    </button>
+
+                </div>
+
+                <div
+                    class="products"
+                    id="productGrid">
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DESPESAS -->
+        <section id="despesas" class="section">
+
+            <div class="panel">
+
+                <div class="head">
+
+                    <h3>
+                        Despesas
+                    </h3>
+
+                    <button
+                        class="btn primary"
+                        onclick="openExpense()">
+
+                        + Nova despesa
+
+                    </button>
+
+                </div>
+
+                <div id="expenseTable"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- MODAL VENDA -->
+<div class="modal" id="saleModal">
+
+    <div class="box">
+
+        <div class="boxhead">
+
+            <h3>
+                Registrar venda
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal('saleModal')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="saleForm">
+
+            <div class="form">
+
+                <div class="field">
+
+                    <label>Data</label>
+
+                    <input
+                        id="saleDate"
+                        type="date"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Produto</label>
+
+                    <select
+                        id="saleProduct"
+                        required>
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Quantidade</label>
+
+                    <input
+                        id="saleQty"
+                        type="number"
+                        min="1"
+                        value="1"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Pagamento</label>
+
+                    <select id="salePayment">
+
+                        <option>PIX</option>
+                        <option>Dinheiro</option>
+                        <option>Cartão</option>
+                        <option>Outro</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label>Valor total</label>
+
+                    <input
+                        id="saleValue"
+                        type="number"
+                        step="0.01"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="btn soft"
+                    onclick="closeModal('saleModal')">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    class="btn primary">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL PRODUTO -->
+<div class="modal" id="productModal">
+
+    <div class="box">
+
+        <div class="boxhead">
+
+            <h3>
+                Novo produto
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal('productModal')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="productForm">
+
+            <div class="form">
+
+                <div class="field full">
+
+                    <label>Nome</label>
+
+                    <input
+                        id="prodName"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Preço de venda
+                    </label>
+
+                    <input
+                        id="prodPrice"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Custo por unidade
+                    </label>
+
+                    <input
+                        id="prodCost"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="btn soft"
+                    onclick="closeModal('productModal')">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    class="btn primary">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL DESPESA -->
+<div class="modal" id="expenseModal">
+
+    <div class="box">
+
+        <div class="boxhead">
+
+            <h3>
+                Nova despesa
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal('expenseModal')">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <form id="expenseForm">
+
+            <div class="form">
+
+                <div class="field">
+
+                    <label>Data</label>
+
+                    <input
+                        id="expDate"
+                        type="date"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Categoria</label>
+
+                    <select id="expCat">
+
+                        <option>Ingredientes</option>
+                        <option>Embalagens</option>
+                        <option>Gás</option>
+                        <option>Energia</option>
+                        <option>Entrega</option>
+                        <option>Marketing</option>
+                        <option>Utensílios</option>
+                        <option>Outros</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label>Descrição</label>
+
+                    <input
+                        id="expDesc"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Valor</label>
+
+                    <input
+                        id="expValue"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    type="button"
+                    class="btn soft"
+                    onclick="closeModal('expenseModal')">
+
+                    Cancelar
+
+                </button>
+
+                <button
+                    class="btn primary">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
