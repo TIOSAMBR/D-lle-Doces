@@ -10,24 +10,28 @@ let db =
     ||
     {
         products: [
+
             {
                 id: 1,
                 name: 'Bolo gelado',
                 price: 15,
                 cost: 6
             },
+
             {
                 id: 2,
                 name: 'Bolo no pote',
                 price: 15,
                 cost: 7
             },
+
             {
                 id: 3,
                 name: 'Bolo em pedaço',
                 price: 12,
                 cost: 5
             }
+
         ],
 
         sales: [],
@@ -40,9 +44,12 @@ let db =
    FUNÇÕES BÁSICAS
 ========================================================= */
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+    document.getElementById(id);
+
 
 const money = n =>
+
     Number(n || 0).toLocaleString(
         'pt-BR',
         {
@@ -51,11 +58,16 @@ const money = n =>
         }
     );
 
+
 const today = () =>
     new Date().toISOString().slice(0, 10);
 
+
 const save = () =>
-    localStorage.setItem(KEY, JSON.stringify(db));
+    localStorage.setItem(
+        KEY,
+        JSON.stringify(db)
+    );
 
 
 /* =========================================================
@@ -70,19 +82,25 @@ function setup() {
 
     for (let i = 0; i < 12; i++) {
 
-        let d = new Date(
-            now.getFullYear(),
-            now.getMonth() - i,
-            1
-        );
+        let d =
+            new Date(
+                now.getFullYear(),
+                now.getMonth() - i,
+                1
+            );
+
 
         let value =
             d.toISOString().slice(0, 7);
 
+
         let option =
             document.createElement('option');
 
-        option.value = value;
+
+        option.value =
+            value;
+
 
         option.textContent =
             d.toLocaleDateString(
@@ -93,13 +111,17 @@ function setup() {
                 }
             );
 
+
         select.appendChild(option);
     }
+
 
     select.value =
         now.toISOString().slice(0, 7);
 
-    select.onchange = render;
+
+    select.onchange =
+        render;
 }
 
 
@@ -118,33 +140,129 @@ function T() {
 
     let sales =
         db.sales.filter(
-            x => x.date.slice(0, 7) == month()
+            x =>
+                x.date &&
+                x.date.slice(0, 7) === month()
         );
+
 
     let expenses =
         db.expenses.filter(
-            x => x.date.slice(0, 7) == month()
+            x =>
+                x.date &&
+                x.date.slice(0, 7) === month()
         );
+
 
     let revenue =
         sales.reduce(
-            (a, x) => a + Number(x.value),
+            (a, x) =>
+                a + Number(x.value || 0),
             0
         );
+
 
     let expense =
         expenses.reduce(
-            (a, x) => a + Number(x.value),
+            (a, x) =>
+                a + Number(x.value || 0),
             0
         );
 
+
     return {
+
         s: sales,
+
         e: expenses,
+
         r: revenue,
+
         d: expense,
+
         p: revenue - expense
+
     };
+}
+
+
+/* =========================================================
+   QUANTIDADE TOTAL DE ITENS
+========================================================= */
+
+function getSaleItemsQty(sale) {
+
+    /*
+     * Venda nova
+     */
+
+    if (
+        Array.isArray(sale.items)
+    ) {
+
+        return sale.items.reduce(
+            (total, item) =>
+                total +
+                Number(item.qty || 0),
+            0
+        );
+
+    }
+
+
+    /*
+     * Compatibilidade com
+     * vendas antigas
+     */
+
+    return Number(
+        sale.qty || 0
+    );
+
+}
+
+
+function getTotalItems(sales) {
+
+    return sales.reduce(
+        (total, sale) =>
+            total +
+            getSaleItemsQty(sale),
+        0
+    );
+
+}
+
+
+/* =========================================================
+   TEXTO DOS PRODUTOS
+========================================================= */
+
+function saleProductsText(sale) {
+
+    /*
+     * Venda nova
+     */
+
+    if (
+        Array.isArray(sale.items)
+    ) {
+
+        return sale.items
+            .map(item =>
+                `${item.product} ×${item.qty}`
+            )
+            .join(', ');
+
+    }
+
+
+    /*
+     * Venda antiga
+     */
+
+    return `${sale.product || 'Produto'} ×${sale.qty || 1}`;
+
 }
 
 
@@ -156,6 +274,7 @@ function render() {
 
     let t = T();
 
+
     let margin =
         t.r
             ? 100 * t.p / t.r
@@ -165,11 +284,14 @@ function render() {
     $('revenue').textContent =
         money(t.r);
 
+
     $('expenses').textContent =
         money(t.d);
 
+
     $('profit').textContent =
         money(t.p);
+
 
     $('profit').className =
         t.p >= 0
@@ -178,22 +300,32 @@ function render() {
 
 
     $('items').textContent =
-        t.s.reduce(
-            (a, x) => a + Number(x.qty),
-            0
-        );
+        getTotalItems(t.s);
 
 
     $('margin').textContent =
-        'Margem ' + margin.toFixed(1) + '%';
+        'Margem ' +
+        margin.toFixed(1) +
+        '%';
 
 
     $('summary').innerHTML =
-        '<b>Faturamento:</b> ' + money(t.r) +
-        '<br><b>Despesas:</b> ' + money(t.d) +
-        '<br><b>Lucro:</b> ' + money(t.p) +
-        '<br><b>Margem:</b> ' + margin.toFixed(1) + '%' +
-        '<br><b>Pedidos:</b> ' + t.s.length;
+
+        '<b>Faturamento:</b> ' +
+        money(t.r) +
+
+        '<br><b>Despesas:</b> ' +
+        money(t.d) +
+
+        '<br><b>Lucro:</b> ' +
+        money(t.p) +
+
+        '<br><b>Margem:</b> ' +
+        margin.toFixed(1) +
+        '%' +
+
+        '<br><b>Pedidos:</b> ' +
+        t.s.length;
 
 
     chart(t.s);
@@ -205,6 +337,7 @@ function render() {
     products();
 
     expenses(t.e);
+
 }
 
 
@@ -214,11 +347,22 @@ function render() {
 
 function chart(s) {
 
-    let [y, mo] =
-        month().split('-').map(Number);
+    let [
+        y,
+        mo
+    ] =
+        month()
+            .split('-')
+            .map(Number);
+
 
     let days =
-        new Date(y, mo, 0).getDate();
+        new Date(
+            y,
+            mo,
+            0
+        ).getDate();
+
 
     let values =
         Array(days).fill(0);
@@ -229,7 +373,16 @@ function chart(s) {
         let day =
             +x.date.slice(8) - 1;
 
-        values[day] += Number(x.value);
+
+        if (
+            day >= 0 &&
+            day < values.length
+        ) {
+
+            values[day] +=
+                Number(x.value || 0);
+
+        }
 
     });
 
@@ -239,37 +392,48 @@ function chart(s) {
 
 
     $('chart').innerHTML =
-        values.map((n, i) => `
 
-            <div class="barwrap">
+        values.map(
+            (n, i) => `
 
-                <span class="barvalue">
+                <div class="barwrap">
 
-                    ${n
-                        ? money(n).replace('R$', '')
-                        : ''
-                    }
+                    <span class="barvalue">
 
-                </span>
+                        ${
+                            n
+                                ? money(n)
+                                    .replace('R$', '')
+                                : ''
+                        }
 
-                <div
-                    class="bar"
-                    title="${money(n)}"
-                    style="
-                        height:${Math.max(
-                            3,
-                            n / max * 80
-                        )}%
-                    ">
+                    </span>
+
+
+                    <div
+                        class="bar"
+                        title="${money(n)}"
+                        style="
+                            height:
+                            ${Math.max(
+                                3,
+                                n / max * 80
+                            )}%
+                        ">
+                    </div>
+
+
+                    <span class="barlabel">
+
+                        ${i + 1}
+
+                    </span>
+
                 </div>
 
-                <span class="barlabel">
-                    ${i + 1}
-                </span>
+            `
+        ).join('');
 
-            </div>
-
-        `).join('');
 }
 
 
@@ -280,22 +444,31 @@ function chart(s) {
 function tableSales(s) {
 
     $('salesTable').innerHTML =
+
         s.length
 
             ?
 
             `
+
             <table>
 
                 <tr>
 
                     <th>Data</th>
-                    <th>Produto</th>
+
+                    <th>Cliente</th>
+
+                    <th>Produtos</th>
+
                     <th>Pagamento</th>
+
                     <th>Valor</th>
+
                     <th></th>
 
                 </tr>
+
 
                 ${
 
@@ -303,66 +476,108 @@ function tableSales(s) {
                         .slice()
                         .sort(
                             (a, b) =>
-                                b.date.localeCompare(a.date)
+                                b.date.localeCompare(
+                                    a.date
+                                )
                         )
-                        .map(x => `
+                        .map(
+                            x => `
 
-                            <tr>
+                                <tr>
 
-                                <td>
-                                    ${x.date
-                                        .split('-')
-                                        .reverse()
-                                        .join('/')
-                                    }
-                                </td>
+                                    <td>
 
-                                <td>
+                                        ${
+                                            x.date
+                                                .split('-')
+                                                .reverse()
+                                                .join('/')
+                                        }
 
-                                    <strong>
-                                        ${x.product}
-                                    </strong>
+                                    </td>
 
-                                    ×${x.qty}
 
-                                </td>
+                                    <td>
 
-                                <td>
-                                    ${x.payment}
-                                </td>
+                                        <strong>
 
-                                <td>
-                                    ${money(x.value)}
-                                </td>
+                                            ${
+                                                escapeHTML(
+                                                    x.customer ||
+                                                    'Cliente não informado'
+                                                )
+                                            }
 
-                                <td>
+                                        </strong>
 
-                                    <button
-                                        class="btn danger"
-                                        onclick="del('sales', ${x.id})">
+                                    </td>
 
-                                        Excluir
 
-                                    </button>
+                                    <td>
 
-                                </td>
+                                        ${
+                                            escapeHTML(
+                                                saleProductsText(x)
+                                            )
+                                        }
 
-                            </tr>
+                                    </td>
 
-                        `).join('')
+
+                                    <td>
+
+                                        ${
+                                            escapeHTML(
+                                                x.payment || ''
+                                            )
+                                        }
+
+                                    </td>
+
+
+                                    <td>
+
+                                        ${money(x.value)}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <button
+                                            class="btn danger"
+                                            onclick="del('sales', ${x.id})">
+
+                                            Excluir
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            `
+                        )
+                        .join('')
 
                 }
 
             </table>
+
             `
 
             :
 
             `
+
             <div class="empty">
+
                 Nenhuma venda neste mês.
+
             </div>
+
             `;
+
 }
 
 
@@ -377,76 +592,124 @@ function recent(s) {
             .slice()
             .sort(
                 (a, b) =>
-                    b.date.localeCompare(a.date)
+                    b.date.localeCompare(
+                        a.date
+                    )
             )
             .slice(0, 6);
 
 
     $('recent').innerHTML =
+
         a.length
 
             ?
 
             `
+
             <table>
 
                 <tr>
 
                     <th>Data</th>
-                    <th>Produto</th>
+
+                    <th>Cliente</th>
+
+                    <th>Produtos</th>
+
                     <th>Pagamento</th>
+
                     <th>Valor</th>
 
                 </tr>
 
+
                 ${
 
-                    a.map(x => `
+                    a.map(
+                        x => `
 
-                        <tr>
+                            <tr>
 
-                            <td>
-                                ${x.date
-                                    .split('-')
-                                    .reverse()
-                                    .join('/')
-                                }
-                            </td>
+                                <td>
 
-                            <td>
+                                    ${
+                                        x.date
+                                            .split('-')
+                                            .reverse()
+                                            .join('/')
+                                    }
 
-                                <strong>
-                                    ${x.product}
-                                </strong>
+                                </td>
 
-                                ×${x.qty}
 
-                            </td>
+                                <td>
 
-                            <td>
-                                ${x.payment}
-                            </td>
+                                    <strong>
 
-                            <td>
-                                ${money(x.value)}
-                            </td>
+                                        ${
+                                            escapeHTML(
+                                                x.customer ||
+                                                'Cliente não informado'
+                                            )
+                                        }
 
-                        </tr>
+                                    </strong>
 
-                    `).join('')
+                                </td>
+
+
+                                <td>
+
+                                    ${
+                                        escapeHTML(
+                                            saleProductsText(x)
+                                        )
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+                                    ${
+                                        escapeHTML(
+                                            x.payment || ''
+                                        )
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+                                    ${money(x.value)}
+
+                                </td>
+
+                            </tr>
+
+                        `
+                    ).join('')
 
                 }
 
             </table>
+
             `
 
             :
 
             `
+
             <div class="empty">
+
                 Nenhuma venda neste mês.
+
             </div>
+
             `;
+
 }
 
 
@@ -458,75 +721,99 @@ function products() {
 
     $('productGrid').innerHTML =
 
-        db.products.map(p => {
+        db.products.map(
+            p => {
 
-            let lucro =
-                Number(p.price) -
-                Number(p.cost);
-
-            let margem =
-                p.price
-                    ? 100 * lucro / p.price
-                    : 0;
+                let lucro =
+                    Number(p.price) -
+                    Number(p.cost);
 
 
-            return `
+                let margem =
+                    p.price
+                        ? 100 *
+                          lucro /
+                          p.price
+                        : 0;
 
-                <div class="product">
 
-                    <h4>
-                        ${p.name}
-                    </h4>
+                return `
+
+                    <div class="product">
+
+                        <h4>
+
+                            ${
+                                escapeHTML(
+                                    p.name
+                                )
+                            }
+
+                        </h4>
 
 
-                    <div class="prices">
+                        <div class="prices">
 
-                        <span>
-                            Venda ${money(p.price)}
-                        </span>
+                            <span>
 
-                        <span>
-                            Custo ${money(p.cost)}
-                        </span>
+                                Venda
+                                ${money(p.price)}
+
+                            </span>
+
+
+                            <span>
+
+                                Custo
+                                ${money(p.cost)}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="profit">
+
+                            Lucro
+                            ${money(lucro)}
+
+                            •
+
+                            ${margem.toFixed(1)}%
+
+                        </div>
+
+
+                        <div class="product-actions">
+
+
+                            <button
+                                class="btn soft"
+                                onclick="editProduct(${p.id})">
+
+                                ✏️ Editar
+
+                            </button>
+
+
+                            <button
+                                class="btn danger"
+                                onclick="delProduct(${p.id})">
+
+                                🗑️ Remover
+
+                            </button>
+
+
+                        </div>
 
                     </div>
 
+                `;
 
-                    <div class="profit">
+            }
+        ).join('');
 
-                        Lucro ${money(lucro)}
-                        •
-                        ${margem.toFixed(1)}%
-
-                    </div>
-
-
-                    <div class="product-actions">
-
-                        <button
-                            class="btn soft"
-                            onclick="editProduct(${p.id})">
-
-                            ✏️ Editar
-
-                        </button>
-
-
-                        <button
-                            class="btn danger"
-                            onclick="delProduct(${p.id})">
-
-                            🗑️ Remover
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join('');
 }
 
 
@@ -548,8 +835,10 @@ function editProduct(id) {
     $('prodName').value =
         product.name;
 
+
     $('prodPrice').value =
         product.price;
+
 
     $('prodCost').value =
         product.cost;
@@ -565,7 +854,10 @@ function editProduct(id) {
         'Editar produto';
 
 
-    openModal('productModal');
+    openModal(
+        'productModal'
+    );
+
 }
 
 
@@ -586,7 +878,36 @@ function delProduct(id) {
 
     const hasSales =
         db.sales.some(
-            x => x.product === product.name
+            sale => {
+
+                /*
+                 * Venda nova
+                 */
+
+                if (
+                    Array.isArray(
+                        sale.items
+                    )
+                ) {
+
+                    return sale.items.some(
+                        item =>
+                            Number(
+                                item.productId
+                            ) === Number(id)
+                    );
+
+                }
+
+
+                /*
+                 * Venda antiga
+                 */
+
+                return sale.product ===
+                    product.name;
+
+            }
         );
 
 
@@ -597,10 +918,15 @@ function delProduct(id) {
     if (hasSales) {
 
         message +=
+
             `\n\n⚠️ Este produto possui vendas registradas.` +
+
             `\n\nAs vendas antigas serão mantidas,` +
+
             ` mas o produto não poderá mais ser` +
+
             ` selecionado em novas vendas.`;
+
     }
 
 
@@ -608,14 +934,17 @@ function delProduct(id) {
 
         db.products =
             db.products.filter(
-                p => p.id !== id
+                p =>
+                    p.id !== id
             );
 
 
         save();
 
         render();
+
     }
+
 }
 
 
@@ -626,22 +955,29 @@ function delProduct(id) {
 function expenses(e) {
 
     $('expenseTable').innerHTML =
+
         e.length
 
             ?
 
             `
+
             <table>
 
                 <tr>
 
                     <th>Data</th>
+
                     <th>Categoria</th>
+
                     <th>Descrição</th>
+
                     <th>Valor</th>
+
                     <th></th>
 
                 </tr>
+
 
                 ${
 
@@ -649,64 +985,112 @@ function expenses(e) {
                         .slice()
                         .sort(
                             (a, b) =>
-                                b.date.localeCompare(a.date)
+                                b.date.localeCompare(
+                                    a.date
+                                )
                         )
-                        .map(x => `
+                        .map(
+                            x => `
 
-                            <tr>
+                                <tr>
 
-                                <td>
-                                    ${x.date
-                                        .split('-')
-                                        .reverse()
-                                        .join('/')
-                                    }
-                                </td>
+                                    <td>
 
-                                <td>
+                                        ${
+                                            x.date
+                                                .split('-')
+                                                .reverse()
+                                                .join('/')
+                                        }
 
-                                    <span class="tag">
-                                        ${x.cat}
-                                    </span>
+                                    </td>
 
-                                </td>
 
-                                <td>
-                                    ${x.desc}
-                                </td>
+                                    <td>
 
-                                <td>
-                                    ${money(x.value)}
-                                </td>
+                                        <span class="tag">
 
-                                <td>
+                                            ${
+                                                escapeHTML(
+                                                    x.cat
+                                                )
+                                            }
 
-                                    <button
-                                        class="btn danger"
-                                        onclick="del('expenses', ${x.id})">
+                                        </span>
 
-                                        Excluir
+                                    </td>
 
-                                    </button>
 
-                                </td>
+                                    <td>
 
-                            </tr>
+                                        ${
+                                            escapeHTML(
+                                                x.desc
+                                            )
+                                        }
 
-                        `).join('')
+                                    </td>
+
+
+                                    <td>
+
+                                        ${money(x.value)}
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <button
+                                            class="btn danger"
+                                            onclick="del('expenses', ${x.id})">
+
+                                            Excluir
+
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            `
+                        )
+                        .join('')
 
                 }
 
             </table>
+
             `
 
             :
 
             `
+
             <div class="empty">
+
                 Nenhuma despesa neste mês.
+
             </div>
+
             `;
+
+}
+
+
+/* =========================================================
+   SEGURANÇA DE TEXTO HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
 }
 
 
@@ -734,67 +1118,305 @@ function closeModal(id) {
 
 function openSale() {
 
-    let select =
-        $('saleProduct');
-
-
-    select.innerHTML =
-        db.products.map(p => `
-
-            <option value="${p.id}">
-
-                ${p.name}
-                —
-                ${money(p.price)}
-
-            </option>
-
-        `).join('');
+    $('saleForm').reset();
 
 
     $('saleDate').value =
         today();
 
-    $('saleQty').value =
-        1;
+
+    $('saleCustomer').value =
+        '';
 
 
-    updateValue();
+    $('saleItems').innerHTML =
+        '';
 
-    openModal('saleModal');
+
+    $('saleValue').value =
+        '0.00';
+
+
+    $('saleTotalDisplay').textContent =
+        money(0);
+
+
+    /*
+     * Adiciona automaticamente
+     * o primeiro produto
+     */
+
+    addSaleItem();
+
+
+    openModal(
+        'saleModal'
+    );
+
 }
 
 
-function updateValue() {
+/* =========================================================
+   ADICIONAR PRODUTO NA VENDA
+========================================================= */
 
-    let product =
-        db.products.find(
-            p =>
-                p.id ==
-                $('saleProduct').value
+function addSaleItem(productId = null) {
+
+    if (!db.products.length) {
+
+        alert(
+            'Cadastre pelo menos um produto antes de registrar uma venda.'
+        );
+
+        return;
+
+    }
+
+
+    const container =
+        $('saleItems');
+
+
+    const row =
+        document.createElement(
+            'div'
         );
 
 
-    let qty =
-        +$('saleQty').value || 1;
+    row.className =
+        'sale-item';
 
 
-    if (product) {
+    const options =
+        db.products
+            .map(
+                p => `
 
-        $('saleValue').value =
-            (
-                product.price * qty
-            ).toFixed(2);
+                    <option
+                        value="${p.id}"
+                        ${
+                            productId != null &&
+                            Number(productId) === Number(p.id)
+                                ? 'selected'
+                                : ''
+                        }>
 
-    }
+                        ${escapeHTML(p.name)}
+                        —
+                        ${money(p.price)}
+
+                    </option>
+
+                `
+            )
+            .join('');
+
+
+    row.innerHTML = `
+
+        <select
+            class="sale-item-product">
+
+            ${options}
+
+        </select>
+
+
+        <input
+            class="sale-item-qty"
+            type="number"
+            min="1"
+            value="1">
+
+
+        <span
+            class="sale-item-total">
+
+            ${money(
+                getSelectedProductPrice(row)
+            )}
+
+        </span>
+
+
+        <button
+            type="button"
+            class="remove-item"
+            onclick="removeSaleItem(this)">
+
+            ×
+
+        </button>
+
+    `;
+
+
+    container.appendChild(row);
+
+
+    const select =
+        row.querySelector(
+            '.sale-item-product'
+        );
+
+
+    const qty =
+        row.querySelector(
+            '.sale-item-qty'
+        );
+
+
+    select.addEventListener(
+        'change',
+        updateSaleTotal
+    );
+
+
+    qty.addEventListener(
+        'input',
+        updateSaleTotal
+    );
+
+
+    updateSaleTotal();
+
 }
 
 
-$('saleProduct').onchange =
-    updateValue;
+/* =========================================================
+   PREÇO DO PRODUTO SELECIONADO
+========================================================= */
 
-$('saleQty').oninput =
-    updateValue;
+function getSelectedProductPrice(row) {
+
+    const select =
+        row.querySelector(
+            '.sale-item-product'
+        );
+
+
+    if (!select) return 0;
+
+
+    const product =
+        db.products.find(
+            p =>
+                Number(p.id) ===
+                Number(select.value)
+        );
+
+
+    return product
+        ? Number(product.price)
+        : 0;
+
+}
+
+
+/* =========================================================
+   REMOVER ITEM DA VENDA
+========================================================= */
+
+function removeSaleItem(button) {
+
+    const row =
+        button.closest(
+            '.sale-item'
+        );
+
+
+    if (row) {
+
+        row.remove();
+
+    }
+
+
+    /*
+     * Se não sobrar nenhum,
+     * adiciona outro automaticamente.
+     */
+
+    if (
+        !$('saleItems')
+            .querySelector(
+                '.sale-item'
+            )
+    ) {
+
+        addSaleItem();
+
+    }
+
+
+    updateSaleTotal();
+
+}
+
+
+/* =========================================================
+   ATUALIZAR TOTAL DA VENDA
+========================================================= */
+
+function updateSaleTotal() {
+
+    const rows =
+        document.querySelectorAll(
+            '#saleItems .sale-item'
+        );
+
+
+    let total = 0;
+
+
+    rows.forEach(row => {
+
+        const product =
+            db.products.find(
+                p =>
+                    Number(p.id) ===
+                    Number(
+                        row.querySelector(
+                            '.sale-item-product'
+                        ).value
+                    )
+            );
+
+
+        const qty =
+            Number(
+                row.querySelector(
+                    '.sale-item-qty'
+                ).value
+            ) || 0;
+
+
+        const itemTotal =
+            product
+                ? Number(product.price) * qty
+                : 0;
+
+
+        row.querySelector(
+            '.sale-item-total'
+        ).textContent =
+            money(itemTotal);
+
+
+        total +=
+            itemTotal;
+
+    });
+
+
+    $('saleValue').value =
+        total.toFixed(2);
+
+
+    $('saleTotalDisplay').textContent =
+        money(total);
+
+}
 
 
 /* =========================================================
@@ -806,46 +1428,159 @@ $('saleForm').onsubmit = e => {
     e.preventDefault();
 
 
-    let product =
-        db.products.find(
-            p =>
-                p.id ==
-                $('saleProduct').value
+    const customer =
+        $('saleCustomer')
+            .value
+            .trim();
+
+
+    if (!customer) {
+
+        alert(
+            'Digite o nome do cliente.'
+        );
+
+        $('saleCustomer').focus();
+
+        return;
+
+    }
+
+
+    const rows =
+        document.querySelectorAll(
+            '#saleItems .sale-item'
         );
 
 
-    if (!product) {
+    if (!rows.length) {
 
         alert(
-            'Cadastre pelo menos um produto antes de registrar uma venda.'
+            'Adicione pelo menos um produto à venda.'
         );
 
         return;
+
+    }
+
+
+    const items = [];
+
+
+    let total = 0;
+
+
+    rows.forEach(row => {
+
+        const productId =
+            Number(
+                row.querySelector(
+                    '.sale-item-product'
+                ).value
+            );
+
+
+        const qty =
+            Number(
+                row.querySelector(
+                    '.sale-item-qty'
+                ).value
+            );
+
+
+        const product =
+            db.products.find(
+                p =>
+                    Number(p.id) ===
+                    productId
+            );
+
+
+        if (
+            product &&
+            qty > 0
+        ) {
+
+            const itemTotal =
+                Number(product.price) *
+                qty;
+
+
+            items.push({
+
+                productId:
+                    product.id,
+
+                product:
+                    product.name,
+
+                qty:
+                    qty,
+
+                price:
+                    Number(product.price),
+
+                cost:
+                    Number(product.cost),
+
+                total:
+                    itemTotal
+
+            });
+
+
+            total +=
+                itemTotal;
+
+        }
+
+    });
+
+
+    if (!items.length) {
+
+        alert(
+            'Adicione pelo menos um produto válido.'
+        );
+
+        return;
+
     }
 
 
     db.sales.push({
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        date: $('saleDate').value,
+        date:
+            $('saleDate').value,
 
-        product: product.name,
+        customer:
+            customer,
 
-        qty: +$('saleQty').value,
+        items:
+            items,
 
-        value: +$('saleValue').value,
+        value:
+            total,
 
-        payment: $('salePayment').value
+        payment:
+            $('salePayment').value
 
     });
 
 
     save();
 
-    closeModal('saleModal');
+
+    closeModal(
+        'saleModal'
+    );
+
 
     render();
+
 };
 
 
@@ -857,7 +1592,11 @@ function openProduct() {
 
     $('productForm').reset();
 
-    delete $('productForm').dataset.editId;
+
+    delete
+        $('productForm')
+            .dataset
+            .editId;
 
 
     $('productModal')
@@ -866,7 +1605,10 @@ function openProduct() {
         'Novo produto';
 
 
-    openModal('productModal');
+    openModal(
+        'productModal'
+    );
+
 }
 
 
@@ -886,13 +1628,21 @@ $('productForm').onsubmit = e => {
 
 
     const name =
-        $('prodName').value.trim();
+        $('prodName')
+            .value
+            .trim();
+
 
     const price =
-        +$('prodPrice').value;
+        Number(
+            $('prodPrice').value
+        );
+
 
     const cost =
-        +$('prodCost').value;
+        Number(
+            $('prodCost').value
+        );
 
 
     if (!name) {
@@ -902,96 +1652,112 @@ $('productForm').onsubmit = e => {
         );
 
         return;
+
     }
 
 
-    if (price < 0 || cost < 0) {
+    if (
+        price < 0 ||
+        cost < 0
+    ) {
 
         alert(
             'Preço e custo não podem ser negativos.'
         );
 
         return;
+
     }
 
 
-    /* EDITAR */
+    /*
+     * EDITAR
+     */
 
     if (editId) {
 
         const product =
             db.products.find(
-                p => p.id === editId
+                p =>
+                    p.id === editId
             );
 
 
         if (product) {
 
-            const oldName =
-                product.name;
-
+            /*
+             * IMPORTANTE:
+             *
+             * Não alteramos vendas antigas.
+             *
+             * Cada item da venda guarda
+             * seu próprio nome, preço e custo.
+             */
 
             product.name =
                 name;
 
+
             product.price =
                 price;
+
 
             product.cost =
                 cost;
 
-
-            /*
-             * Atualiza o nome nas vendas antigas.
-             */
-            db.sales.forEach(sale => {
-
-                if (sale.product === oldName) {
-
-                    sale.product =
-                        name;
-
-                }
-
-            });
         }
 
 
-        delete e.target.dataset.editId;
+        delete
+            e.target.dataset.editId;
 
 
         $('productModal')
             .querySelector('h3')
             .textContent =
             'Novo produto';
+
     }
 
 
-    /* NOVO */
+    /*
+     * NOVO
+     */
 
     else {
 
         db.products.push({
 
-            id: Date.now(),
+            id:
+                Date.now(),
 
-            name: name,
+            name:
+                name,
 
-            price: price,
+            price:
+                price,
 
-            cost: cost
+            cost:
+                cost
 
         });
+
     }
 
 
     save();
 
-    closeModal('productModal');
+
+    closeModal(
+        'productModal'
+    );
+
 
     e.target.reset();
 
+
     render();
+
 };
 
 
@@ -1001,10 +1767,17 @@ $('productForm').onsubmit = e => {
 
 function openExpense() {
 
+    $('expenseForm').reset();
+
+
     $('expDate').value =
         today();
 
-    openModal('expenseModal');
+
+    openModal(
+        'expenseModal'
+    );
+
 }
 
 
@@ -1017,28 +1790,58 @@ $('expenseForm').onsubmit = e => {
     e.preventDefault();
 
 
+    const value =
+        Number(
+            $('expValue').value
+        );
+
+
+    if (value < 0) {
+
+        alert(
+            'O valor não pode ser negativo.'
+        );
+
+        return;
+
+    }
+
+
     db.expenses.push({
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        date: $('expDate').value,
+        date:
+            $('expDate').value,
 
-        cat: $('expCat').value,
+        cat:
+            $('expCat').value,
 
-        desc: $('expDesc').value,
+        desc:
+            $('expDesc')
+                .value
+                .trim(),
 
-        value: +$('expValue').value
+        value:
+            value
 
     });
 
 
     save();
 
-    closeModal('expenseModal');
+
+    closeModal(
+        'expenseModal'
+    );
+
 
     e.target.reset();
 
+
     render();
+
 };
 
 
@@ -1056,14 +1859,18 @@ function del(type, id) {
 
         db[type] =
             db[type].filter(
-                x => x.id !== id
+                x =>
+                    x.id !== id
             );
 
 
         save();
 
+
         render();
+
     }
+
 }
 
 
@@ -1079,32 +1886,56 @@ document
 
             document
                 .querySelectorAll('.nav')
-                .forEach(x =>
-                    x.classList.remove('active')
+                .forEach(
+                    x =>
+                        x.classList.remove(
+                            'active'
+                        )
                 );
 
 
-            button.classList.add('active');
+            button.classList.add(
+                'active'
+            );
 
 
             document
                 .querySelectorAll('.section')
-                .forEach(x =>
-                    x.classList.remove('active')
+                .forEach(
+                    x =>
+                        x.classList.remove(
+                            'active'
+                        )
                 );
 
 
-            $(button.dataset.s)
-                .classList.add('active');
+            $(
+                button.dataset.s
+            ).classList.add(
+                'active'
+            );
 
 
-            $('pageTitle').textContent =
+            $('pageTitle')
+                .textContent =
+
                 {
-                    dashboard: 'Visão geral',
-                    vendas: 'Vendas',
-                    produtos: 'Produtos',
-                    despesas: 'Despesas'
-                }[button.dataset.s];
+
+                    dashboard:
+                        'Visão geral',
+
+                    vendas:
+                        'Vendas',
+
+                    produtos:
+                        'Produtos',
+
+                    despesas:
+                        'Despesas'
+
+                }[
+                    button.dataset.s
+                ];
 
         };
 
@@ -1123,9 +1954,13 @@ document
             'click',
             e => {
 
-                if (e.target === modal) {
+                if (
+                    e.target === modal
+                ) {
 
-                    modal.classList.remove('show');
+                    modal.classList.remove(
+                        'show'
+                    );
 
                 }
 
@@ -1136,7 +1971,7 @@ document
 
 
 /* =========================================================
-   INICIAR SISTEMA
+   INICIAR
 ========================================================= */
 
 setup();

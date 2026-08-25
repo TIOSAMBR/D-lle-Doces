@@ -2,27 +2,35 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <meta name="theme-color" content="#9A694B">
 
     <title>Délle Doces — Gestão Financeira</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
 <div class="app">
 
-    <!-- MENU LATERAL -->
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
     <aside class="sidebar">
 
         <div class="brand">
 
-            <img src="logo-referencia.png" alt="Délle Doces">
+            <img
+                src="logo-referencia.png"
+                alt="Délle Doces">
 
             <h1>Délle doces</h1>
 
@@ -30,26 +38,46 @@
 
         </div>
 
+
         <nav>
 
-            <button class="nav active" data-s="dashboard">
+            <button
+                class="nav active"
+                data-s="dashboard">
+
                 <span>🏠</span>
                 <label>Início</label>
+
             </button>
 
-            <button class="nav" data-s="vendas">
+
+            <button
+                class="nav"
+                data-s="vendas">
+
                 <span>🛍️</span>
                 <label>Vendas</label>
+
             </button>
 
-            <button class="nav" data-s="produtos">
+
+            <button
+                class="nav"
+                data-s="produtos">
+
                 <span>🧁</span>
                 <label>Produtos</label>
+
             </button>
 
-            <button class="nav" data-s="despesas">
+
+            <button
+                class="nav"
+                data-s="despesas">
+
                 <span>💸</span>
                 <label>Despesas</label>
+
             </button>
 
         </nav>
@@ -57,19 +85,30 @@
     </aside>
 
 
-    <!-- CONTEÚDO -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
     <main class="main">
 
+
         <!-- TOPO -->
+
         <div class="top">
 
             <div class="title">
 
                 <div class="mobile-logo">
-                    <img src="logo-referencia.png" alt="Logo">
+
+                    <img
+                        src="logo-referencia.png"
+                        alt="Logo">
+
                 </div>
 
+
                 <div>
+
                     <h2 id="pageTitle">
                         Visão geral
                     </h2>
@@ -77,6 +116,7 @@
                     <p>
                         Gestão financeira da Délle Doces
                     </p>
+
                 </div>
 
             </div>
@@ -93,16 +133,27 @@
         </div>
 
 
-        <!-- DASHBOARD -->
-        <section id="dashboard" class="section active">
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <section
+            id="dashboard"
+            class="section active">
+
 
             <div class="cards">
 
+
                 <div class="card">
 
-                    <span class="icon">💰</span>
+                    <span class="icon">
+                        💰
+                    </span>
 
-                    <small>Faturamento</small>
+                    <small>
+                        Faturamento
+                    </small>
 
                     <strong id="revenue">
                         R$ 0,00
@@ -113,9 +164,13 @@
 
                 <div class="card">
 
-                    <span class="icon">💸</span>
+                    <span class="icon">
+                        💸
+                    </span>
 
-                    <small>Despesas</small>
+                    <small>
+                        Despesas
+                    </small>
 
                     <strong id="expenses">
                         R$ 0,00
@@ -126,9 +181,13 @@
 
                 <div class="card">
 
-                    <span class="icon">🌿</span>
+                    <span class="icon">
+                        🌿
+                    </span>
 
-                    <small>Lucro líquido</small>
+                    <small>
+                        Lucro líquido
+                    </small>
 
                     <strong id="profit">
                         R$ 0,00
@@ -139,9 +198,13 @@
 
                 <div class="card">
 
-                    <span class="icon">🧁</span>
+                    <span class="icon">
+                        🧁
+                    </span>
 
-                    <small>Itens vendidos</small>
+                    <small>
+                        Itens vendidos
+                    </small>
 
                     <strong id="items">
                         0
@@ -154,6 +217,9 @@
 
             <div class="grid">
 
+
+                <!-- GRÁFICO -->
+
                 <div class="panel chart-panel">
 
                     <div class="head">
@@ -162,16 +228,25 @@
                             Faturamento por dia
                         </h3>
 
-                        <span class="tag" id="margin">
+                        <span
+                            class="tag"
+                            id="margin">
+
                             Margem 0%
+
                         </span>
 
                     </div>
 
-                    <div class="chart" id="chart"></div>
+                    <div
+                        class="chart"
+                        id="chart">
+                    </div>
 
                 </div>
 
+
+                <!-- RESUMO -->
 
                 <div class="panel">
 
@@ -183,12 +258,17 @@
 
                     </div>
 
-                    <div class="summary" id="summary"></div>
+                    <div
+                        class="summary"
+                        id="summary">
+                    </div>
 
                 </div>
 
             </div>
 
+
+            <!-- ÚLTIMAS VENDAS -->
 
             <div class="panel">
 
@@ -197,6 +277,7 @@
                     <h3>
                         Últimas vendas
                     </h3>
+
 
                     <button
                         class="btn primary desktop-add"
@@ -208,6 +289,7 @@
 
                 </div>
 
+
                 <div id="recent"></div>
 
             </div>
@@ -215,8 +297,13 @@
         </section>
 
 
-        <!-- VENDAS -->
-        <section id="vendas" class="section">
+        <!-- =================================================
+             VENDAS
+        ================================================== -->
+
+        <section
+            id="vendas"
+            class="section">
 
             <div class="panel">
 
@@ -225,6 +312,7 @@
                     <h3>
                         Vendas
                     </h3>
+
 
                     <button
                         class="btn primary"
@@ -236,6 +324,7 @@
 
                 </div>
 
+
                 <div id="salesTable"></div>
 
             </div>
@@ -243,8 +332,13 @@
         </section>
 
 
-        <!-- PRODUTOS -->
-        <section id="produtos" class="section">
+        <!-- =================================================
+             PRODUTOS
+        ================================================== -->
+
+        <section
+            id="produtos"
+            class="section">
 
             <div class="panel">
 
@@ -253,6 +347,7 @@
                     <h3>
                         Produtos e margem
                     </h3>
+
 
                     <button
                         class="btn primary"
@@ -264,6 +359,7 @@
 
                 </div>
 
+
                 <div
                     class="products"
                     id="productGrid">
@@ -274,8 +370,13 @@
         </section>
 
 
-        <!-- DESPESAS -->
-        <section id="despesas" class="section">
+        <!-- =================================================
+             DESPESAS
+        ================================================== -->
+
+        <section
+            id="despesas"
+            class="section">
 
             <div class="panel">
 
@@ -284,6 +385,7 @@
                     <h3>
                         Despesas
                     </h3>
+
 
                     <button
                         class="btn primary"
@@ -294,6 +396,7 @@
                     </button>
 
                 </div>
+
 
                 <div id="expenseTable"></div>
 
@@ -306,7 +409,10 @@
 </div>
 
 
-<!-- BOTÃO FLUTUANTE -->
+<!-- =========================================================
+     BOTÃO FLUTUANTE
+========================================================= -->
+
 <button
     class="floating-btn"
     onclick="openSale()"
@@ -317,17 +423,33 @@
 </button>
 
 
-<!-- MODAL VENDA -->
-<div class="modal" id="saleModal">
+<!-- =========================================================
+     MODAL VENDA
+========================================================= -->
 
-    <div class="box">
+<div
+    class="modal"
+    id="saleModal">
+
+
+    <div class="box sale-box">
+
 
         <div class="boxhead">
 
+
             <div>
-                <span class="modal-icon">🛍️</span>
-                <h3>Registrar venda</h3>
+
+                <span class="modal-icon">
+                    🛍️
+                </span>
+
+                <h3>
+                    Registrar venda
+                </h3>
+
             </div>
+
 
             <button
                 class="close"
@@ -342,11 +464,17 @@
 
         <form id="saleForm">
 
+
             <div class="form">
+
+
+                <!-- DATA -->
 
                 <div class="field">
 
-                    <label>Data</label>
+                    <label>
+                        Data
+                    </label>
 
                     <input
                         id="saleDate"
@@ -356,56 +484,92 @@
                 </div>
 
 
-                <div class="field">
-
-                    <label>Produto</label>
-
-                    <select
-                        id="saleProduct"
-                        required>
-                    </select>
-
-                </div>
-
+                <!-- CLIENTE -->
 
                 <div class="field">
 
-                    <label>Quantidade</label>
+                    <label>
+                        Cliente
+                    </label>
 
                     <input
-                        id="saleQty"
-                        type="number"
-                        min="1"
-                        value="1"
+                        id="saleCustomer"
+                        type="text"
+                        placeholder="Nome do cliente"
                         required>
 
                 </div>
 
 
+                <!-- PRODUTOS -->
+
+                <div class="field full">
+
+                    <label>
+                        Produtos da venda
+                    </label>
+
+
+                    <div
+                        id="saleItems"
+                        class="sale-items">
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn soft add-product-btn"
+                        onclick="addSaleItem()">
+
+                        + Adicionar produto
+
+                    </button>
+
+                </div>
+
+
+                <!-- PAGAMENTO -->
+
                 <div class="field">
 
-                    <label>Pagamento</label>
+                    <label>
+                        Pagamento
+                    </label>
 
                     <select id="salePayment">
 
                         <option>PIX</option>
-                        <option>Dinheiro</option>
-                        <option>Cartão</option>
-                        <option>Outro</option>
+
+                        <option>
+                            Dinheiro
+                        </option>
+
+                        <option>
+                            Cartão
+                        </option>
+
+                        <option>
+                            Outro
+                        </option>
 
                     </select>
 
                 </div>
 
 
-                <div class="field full">
+                <!-- TOTAL -->
 
-                    <label>Valor total</label>
+                <div class="field">
+
+                    <label>
+                        Valor total
+                    </label>
 
                     <input
                         id="saleValue"
                         type="number"
                         step="0.01"
+                        readonly
                         required>
 
                 </div>
@@ -413,7 +577,21 @@
             </div>
 
 
+            <div class="sale-total">
+
+                <span>
+                    Total da venda
+                </span>
+
+                <strong id="saleTotalDisplay">
+                    R$ 0,00
+                </strong>
+
+            </div>
+
+
             <div class="actions">
+
 
                 <button
                     type="button"
@@ -423,6 +601,7 @@
                     Cancelar
 
                 </button>
+
 
                 <button
                     class="btn primary">
@@ -440,17 +619,33 @@
 </div>
 
 
-<!-- MODAL PRODUTO -->
-<div class="modal" id="productModal">
+<!-- =========================================================
+     MODAL PRODUTO
+========================================================= -->
+
+<div
+    class="modal"
+    id="productModal">
+
 
     <div class="box">
 
+
         <div class="boxhead">
 
+
             <div>
-                <span class="modal-icon">🧁</span>
-                <h3>Novo produto</h3>
+
+                <span class="modal-icon">
+                    🧁
+                </span>
+
+                <h3>
+                    Novo produto
+                </h3>
+
             </div>
+
 
             <button
                 class="close"
@@ -465,11 +660,15 @@
 
         <form id="productForm">
 
+
             <div class="form">
+
 
                 <div class="field full">
 
-                    <label>Nome do produto</label>
+                    <label>
+                        Nome do produto
+                    </label>
 
                     <input
                         id="prodName"
@@ -517,6 +716,7 @@
 
             <div class="actions">
 
+
                 <button
                     type="button"
                     class="btn soft"
@@ -525,6 +725,7 @@
                     Cancelar
 
                 </button>
+
 
                 <button
                     class="btn primary">
@@ -542,17 +743,33 @@
 </div>
 
 
-<!-- MODAL DESPESA -->
-<div class="modal" id="expenseModal">
+<!-- =========================================================
+     MODAL DESPESA
+========================================================= -->
+
+<div
+    class="modal"
+    id="expenseModal">
+
 
     <div class="box">
 
+
         <div class="boxhead">
 
+
             <div>
-                <span class="modal-icon">💸</span>
-                <h3>Nova despesa</h3>
+
+                <span class="modal-icon">
+                    💸
+                </span>
+
+                <h3>
+                    Nova despesa
+                </h3>
+
             </div>
+
 
             <button
                 class="close"
@@ -567,11 +784,15 @@
 
         <form id="expenseForm">
 
+
             <div class="form">
+
 
                 <div class="field">
 
-                    <label>Data</label>
+                    <label>
+                        Data
+                    </label>
 
                     <input
                         id="expDate"
@@ -583,18 +804,43 @@
 
                 <div class="field">
 
-                    <label>Categoria</label>
+                    <label>
+                        Categoria
+                    </label>
 
                     <select id="expCat">
 
-                        <option>Ingredientes</option>
-                        <option>Embalagens</option>
-                        <option>Gás</option>
-                        <option>Energia</option>
-                        <option>Entrega</option>
-                        <option>Marketing</option>
-                        <option>Utensílios</option>
-                        <option>Outros</option>
+                        <option>
+                            Ingredientes
+                        </option>
+
+                        <option>
+                            Embalagens
+                        </option>
+
+                        <option>
+                            Gás
+                        </option>
+
+                        <option>
+                            Energia
+                        </option>
+
+                        <option>
+                            Entrega
+                        </option>
+
+                        <option>
+                            Marketing
+                        </option>
+
+                        <option>
+                            Utensílios
+                        </option>
+
+                        <option>
+                            Outros
+                        </option>
 
                     </select>
 
@@ -603,7 +849,9 @@
 
                 <div class="field full">
 
-                    <label>Descrição</label>
+                    <label>
+                        Descrição
+                    </label>
 
                     <input
                         id="expDesc"
@@ -615,7 +863,9 @@
 
                 <div class="field">
 
-                    <label>Valor</label>
+                    <label>
+                        Valor
+                    </label>
 
                     <input
                         id="expValue"
@@ -631,6 +881,7 @@
 
             <div class="actions">
 
+
                 <button
                     type="button"
                     class="btn soft"
@@ -639,6 +890,7 @@
                     Cancelar
 
                 </button>
+
 
                 <button
                     class="btn primary">

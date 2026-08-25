@@ -1,34 +1,62 @@
 :root{
+
     --creme:#F8F3E7;
+
     --creme2:#FFFDF7;
+
     --marrom:#9A694B;
+
     --marrom2:#7E533B;
+
     --marrom3:#5D4033;
+
     --verde:#737C55;
+
     --verde2:#E4E7D7;
+
     --bege:#D8C5AA;
+
     --texto:#4E4037;
+
     --muted:#927E70;
+
     --borda:#E8DCCB;
+
     --branco:#fffdf8;
+
     --vermelho:#A85D52;
-    --sombra:0 8px 25px rgba(93,64,51,.08);
+
+    --sombra:
+        0 8px 25px rgba(93,64,51,.08);
+
 }
+
 
 *{
     box-sizing:border-box;
 }
 
+
 html{
     -webkit-text-size-adjust:100%;
 }
 
+
 body{
+
     margin:0;
+
     background:var(--creme);
+
     color:var(--texto);
-    font-family:Arial,Helvetica,sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
 }
+
 
 button,
 input,
@@ -36,910 +64,1673 @@ select{
     font:inherit;
 }
 
+
 button{
     -webkit-tap-highlight-color:transparent;
 }
 
+
 .app{
+
     display:flex;
+
     min-height:100vh;
+
 }
 
 
-/* =========================
+/* =========================================================
    SIDEBAR
-========================= */
+========================================================= */
 
 .sidebar{
+
     width:245px;
+
     background:var(--marrom);
+
     color:var(--creme2);
+
     position:fixed;
+
     left:0;
+
     top:0;
+
     bottom:0;
+
     padding:22px 15px;
+
     z-index:10;
+
 }
+
 
 .brand{
+
     text-align:center;
-    border-bottom:1px solid rgba(255,255,255,.2);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.2);
+
     padding-bottom:20px;
+
 }
+
 
 .brand img{
+
     width:145px;
+
     height:145px;
+
     border-radius:50%;
+
     object-fit:cover;
-    border:3px solid rgba(255,255,255,.75);
+
+    border:
+        3px solid
+        rgba(255,255,255,.75);
+
 }
+
 
 .brand h1{
+
     font-family:Georgia,serif;
+
     font-weight:400;
+
     font-style:italic;
+
     font-size:27px;
+
     margin:10px 0 2px;
+
 }
+
 
 .brand small{
+
     font-size:9px;
+
     letter-spacing:2px;
+
     opacity:.8;
+
 }
+
 
 nav{
+
     margin-top:22px;
+
     display:grid;
+
     gap:7px;
+
 }
+
 
 .nav{
+
     border:0;
+
     background:transparent;
+
     color:var(--creme2);
+
     padding:12px 14px;
+
     text-align:left;
+
     border-radius:12px;
+
     font-size:14px;
+
     cursor:pointer;
+
 }
 
+
 .nav span{
+
     margin-right:8px;
+
 }
+
 
 .nav:hover,
 .nav.active{
-    background:rgba(255,253,247,.14);
-    box-shadow:inset 3px 0 var(--bege);
+
+    background:
+        rgba(255,253,247,.14);
+
+    box-shadow:
+        inset 3px 0 var(--bege);
+
 }
 
 
-/* =========================
+/* =========================================================
    MAIN
-========================= */
+========================================================= */
 
 .main{
+
     margin-left:245px;
+
     width:calc(100% - 245px);
+
     padding:28px;
+
     max-width:1550px;
+
 }
+
 
 .top{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:24px;
+
 }
+
 
 .title{
+
     display:flex;
+
     align-items:center;
+
     gap:12px;
+
 }
+
 
 .mobile-logo{
+
     display:none;
+
 }
+
 
 .title h2{
+
     font-family:Georgia,serif;
+
     font-weight:400;
+
     color:var(--marrom3);
+
     margin:0;
+
     font-size:30px;
+
 }
+
 
 .title p{
+
     margin:5px 0 0;
+
     color:var(--muted);
+
     font-size:13px;
+
 }
+
 
 .month{
+
     background:var(--branco);
+
     border:1px solid var(--borda);
+
     padding:10px 13px;
+
     border-radius:12px;
+
     display:flex;
+
     align-items:center;
+
     gap:6px;
+
 }
+
 
 .month select{
+
     border:0;
+
     background:transparent;
+
     color:var(--marrom3);
+
     font-weight:bold;
+
     outline:0;
+
     cursor:pointer;
+
 }
 
 
-/* =========================
+/* =========================================================
    SEÇÕES
-========================= */
+========================================================= */
 
 .section{
     display:none;
 }
+
 
 .section.active{
     display:block;
 }
 
 
-/* =========================
+/* =========================================================
    CARDS
-========================= */
+========================================================= */
 
 .cards{
+
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+        repeat(4,1fr);
+
     gap:15px;
+
 }
+
 
 .card,
 .panel{
+
     background:var(--branco);
-    border:1px solid var(--borda);
+
+    border:
+        1px solid
+        var(--borda);
+
     border-radius:17px;
+
     box-shadow:var(--sombra);
+
 }
+
 
 .card{
+
     padding:18px;
+
     min-width:0;
+
 }
+
 
 .card small{
+
     color:var(--muted);
+
     font-size:12px;
+
 }
+
 
 .card strong{
+
     display:block;
+
     margin-top:7px;
+
     font-size:23px;
+
     color:var(--marrom3);
+
     white-space:nowrap;
+
 }
 
+
 .icon{
+
     float:right;
+
     width:39px;
+
     height:39px;
+
     border-radius:11px;
+
     background:var(--verde2);
+
     display:grid;
+
     place-items:center;
+
 }
+
 
 .positive{
     color:var(--verde)!important;
 }
+
 
 .negative{
     color:var(--vermelho)!important;
 }
 
 
-/* =========================
+/* =========================================================
    GRID
-========================= */
+========================================================= */
 
 .grid{
+
     display:grid;
-    grid-template-columns:1.5fr 1fr;
+
+    grid-template-columns:
+        1.5fr 1fr;
+
     gap:17px;
+
     margin-top:18px;
+
 }
+
 
 .panel{
+
     padding:19px;
+
     margin-bottom:17px;
+
 }
+
 
 .head{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:15px;
+
     gap:10px;
+
 }
+
 
 .head h3{
+
     font-size:16px;
+
     margin:0;
+
     color:var(--marrom3);
+
 }
 
 
-/* =========================
+/* =========================================================
    BOTÕES
-========================= */
+========================================================= */
 
 .btn{
+
     border:0;
+
     border-radius:10px;
+
     padding:10px 13px;
+
     font-weight:bold;
+
     cursor:pointer;
+
     white-space:nowrap;
+
 }
+
 
 .primary{
+
     background:var(--marrom);
+
     color:white;
+
 }
+
 
 .primary:hover{
+
     background:var(--marrom2);
+
 }
+
 
 .soft{
+
     background:var(--verde2);
+
     color:var(--verde);
+
 }
 
+
 .danger{
+
     background:#f3dfdc;
+
     color:var(--vermelho);
+
 }
+
 
 .btn:hover{
     opacity:.85;
 }
 
 
-/* =========================
+/* =========================================================
    GRÁFICO
-========================= */
+========================================================= */
 
 .chart{
+
     height:245px;
+
     display:flex;
+
     align-items:flex-end;
+
     gap:5px;
-    border-bottom:1px solid var(--borda);
+
+    border-bottom:
+        1px solid
+        var(--borda);
+
     padding:12px 2px 0;
+
 }
+
 
 .barwrap{
+
     height:100%;
+
     flex:1;
+
     min-width:7px;
+
     display:flex;
+
     flex-direction:column;
+
     justify-content:flex-end;
+
     align-items:center;
+
     gap:4px;
+
 }
+
 
 .bar{
+
     width:100%;
+
     max-width:27px;
+
     background:var(--marrom);
-    border-radius:6px 6px 2px 2px;
+
+    border-radius:
+        6px 6px 2px 2px;
+
     min-height:3px;
+
 }
+
 
 .barlabel{
+
     font-size:9px;
+
     color:var(--muted);
+
 }
+
 
 .barvalue{
+
     font-size:8px;
+
     color:var(--marrom3);
+
 }
 
 
-/* =========================
+/* =========================================================
    RESUMO
-========================= */
+========================================================= */
 
 .summary{
+
     line-height:2;
+
     font-size:13px;
+
     color:var(--muted);
+
 }
+
 
 .summary b{
     color:var(--marrom3);
 }
 
 
-/* =========================
+/* =========================================================
    TABELAS
-========================= */
+========================================================= */
 
 table{
+
     width:100%;
+
     border-collapse:collapse;
+
 }
+
 
 th,
 td{
+
     text-align:left;
+
     padding:11px 8px;
-    border-bottom:1px solid var(--borda);
+
+    border-bottom:
+        1px solid
+        var(--borda);
+
     font-size:13px;
+
 }
 
+
 th{
+
     font-size:10px;
+
     text-transform:uppercase;
+
     color:var(--muted);
+
     letter-spacing:.5px;
+
 }
+
 
 td strong{
     color:var(--marrom3);
 }
 
+
 .tag{
+
     background:var(--verde2);
+
     color:var(--verde);
+
     border-radius:20px;
+
     padding:5px 8px;
+
     font-size:10px;
+
     font-weight:bold;
+
 }
+
 
 .empty{
+
     text-align:center;
+
     color:var(--muted);
+
     padding:25px;
+
 }
 
 
-/* =========================
+/* =========================================================
    PRODUTOS
-========================= */
+========================================================= */
 
 .products{
+
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:14px;
+
 }
+
 
 .product{
+
     background:var(--creme2);
-    border:1px solid var(--borda);
+
+    border:
+        1px solid
+        var(--borda);
+
     border-radius:14px;
+
     padding:16px;
+
 }
+
 
 .product h4{
+
     margin:0 0 9px;
+
     font-family:Georgia,serif;
+
     color:var(--marrom3);
+
     font-size:17px;
+
 }
+
 
 .prices{
+
     display:flex;
+
     justify-content:space-between;
+
     gap:8px;
+
     font-size:12px;
+
     color:var(--muted);
+
 }
+
 
 .profit{
+
     margin-top:12px;
+
     color:var(--verde);
+
     font-weight:bold;
+
     font-size:13px;
+
 }
 
+
 .product-actions{
+
     display:flex;
+
     gap:8px;
+
     margin-top:13px;
+
 }
+
 
 .product-actions .btn{
     flex:1;
 }
 
 
-/* =========================
+/* =========================================================
    MODAIS
-========================= */
+========================================================= */
 
 .modal{
+
     display:none;
+
     position:fixed;
+
     inset:0;
-    background:rgba(70,50,40,.48);
+
+    background:
+        rgba(70,50,40,.48);
+
     place-items:center;
+
     padding:18px;
+
     z-index:30;
+
 }
+
 
 .modal.show{
     display:grid;
 }
 
+
 .box{
+
     width:min(540px,100%);
-    max-height:calc(100vh - 36px);
+
+    max-height:
+        calc(100vh - 36px);
+
     overflow-y:auto;
+
     background:var(--branco);
+
     border-radius:19px;
+
     padding:21px;
-    box-shadow:0 20px 60px rgba(50,30,20,.18);
+
+    box-shadow:
+        0 20px 60px
+        rgba(50,30,20,.18);
+
 }
+
+
+.sale-box{
+    width:min(620px,100%);
+}
+
 
 .boxhead{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
+
     margin-bottom:18px;
+
 }
+
 
 .boxhead > div{
+
     display:flex;
+
     align-items:center;
+
     gap:10px;
+
 }
+
 
 .boxhead h3{
+
     font-family:Georgia,serif;
+
     font-weight:400;
+
     color:var(--marrom3);
+
     margin:0;
+
 }
+
 
 .modal-icon{
+
     width:38px;
+
     height:38px;
+
     display:grid;
+
     place-items:center;
+
     background:var(--verde2);
+
     border-radius:10px;
+
 }
+
 
 .close{
+
     border:0;
+
     background:var(--creme);
+
     color:var(--marrom3);
+
     border-radius:8px;
+
     width:36px;
+
     height:36px;
+
     cursor:pointer;
+
     font-size:20px;
+
 }
+
 
 .form{
+
     display:grid;
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap:12px;
+
 }
 
+
 .field{
+
     display:grid;
+
     gap:5px;
+
 }
+
 
 .full{
     grid-column:1/-1;
 }
 
+
 .field label{
+
     font-size:11px;
+
     color:var(--muted);
+
     font-weight:bold;
+
 }
+
 
 .field input,
 .field select{
+
     width:100%;
+
     padding:12px;
-    border:1px solid var(--borda);
+
+    border:
+        1px solid
+        var(--borda);
+
     background:var(--creme2);
+
     border-radius:9px;
+
     outline:0;
+
 }
+
 
 .field input:focus,
 .field select:focus{
+
     border-color:var(--marrom);
+
 }
+
+
+/* =========================================================
+   ITENS DA VENDA
+========================================================= */
+
+.sale-items{
+
+    display:grid;
+
+    gap:9px;
+
+    margin-bottom:10px;
+
+}
+
+
+.sale-item{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        75px
+        95px
+        38px;
+
+    gap:7px;
+
+    align-items:center;
+
+    padding:10px;
+
+    background:var(--creme2);
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:11px;
+
+}
+
+
+.sale-item select,
+.sale-item input{
+
+    width:100%;
+
+    min-width:0;
+
+    padding:9px;
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:8px;
+
+    background:white;
+
+    outline:none;
+
+}
+
+
+.sale-item-total{
+
+    font-weight:bold;
+
+    color:var(--marrom3);
+
+    text-align:right;
+
+    font-size:12px;
+
+}
+
+
+.remove-item{
+
+    border:0;
+
+    width:34px;
+
+    height:34px;
+
+    border-radius:8px;
+
+    background:#f3dfdc;
+
+    color:var(--vermelho);
+
+    cursor:pointer;
+
+    font-size:16px;
+
+}
+
+
+.add-product-btn{
+
+    width:100%;
+
+    border:
+        1px dashed
+        var(--verde);
+
+    background:transparent;
+
+}
+
+
+.sale-total{
+
+    margin-top:16px;
+
+    padding:15px;
+
+    background:var(--verde2);
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.sale-total span{
+
+    color:var(--verde);
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+
+.sale-total strong{
+
+    color:var(--marrom3);
+
+    font-size:22px;
+
+}
+
 
 .actions{
+
     display:flex;
+
     justify-content:flex-end;
+
     gap:8px;
+
     margin-top:18px;
+
 }
 
 
-/* =========================
+/* =========================================================
    BOTÃO FLUTUANTE
-========================= */
+========================================================= */
 
 .floating-btn{
+
     display:none;
+
 }
 
 
-/* =========================
+/* =========================================================
    TABLET
-========================= */
+========================================================= */
 
 @media(max-width:1050px){
 
     .cards{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
+
     }
+
 
     .grid{
+
         grid-template-columns:1fr;
+
     }
 
+
     .products{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
+
     }
+
 }
 
 
-/* =========================
+/* =========================================================
    CELULAR
-========================= */
+========================================================= */
 
 @media(max-width:700px){
 
     body{
+
         padding-bottom:70px;
+
     }
 
-
-    /* MENU INFERIOR */
 
     .sidebar{
+
         top:auto;
+
         left:0;
+
         right:0;
+
         bottom:0;
+
         width:100%;
+
         height:68px;
+
         padding:5px 8px;
-        border-radius:18px 18px 0 0;
-        box-shadow:0 -5px 25px rgba(80,50,35,.15);
+
+        border-radius:
+            18px 18px 0 0;
+
+        box-shadow:
+            0 -5px 25px
+            rgba(80,50,35,.15);
+
     }
+
 
     .brand{
         display:none;
     }
 
+
     nav{
+
         display:flex;
+
         width:100%;
+
         height:100%;
+
         margin:0;
-        justify-content:space-around;
+
+        justify-content:
+            space-around;
+
         align-items:center;
+
         gap:4px;
+
     }
+
 
     .nav{
+
         flex:1;
+
         height:58px;
+
         padding:5px 2px;
+
         font-size:10px;
+
         text-align:center;
+
         border-radius:12px;
+
         display:flex;
+
         flex-direction:column;
+
         justify-content:center;
+
         align-items:center;
+
         gap:3px;
+
     }
 
+
     .nav span{
+
         margin:0;
+
         font-size:20px;
+
         line-height:20px;
+
     }
+
 
     .nav label{
         font-size:10px;
     }
 
+
     .nav:hover,
     .nav.active{
+
         box-shadow:none;
-        background:rgba(255,253,247,.15);
+
+        background:
+            rgba(255,253,247,.15);
+
     }
 
-
-    /* MAIN */
 
     .main{
+
         margin:0;
+
         width:100%;
-        padding:15px 12px 25px;
+
+        padding:
+            15px 12px 25px;
+
     }
 
-
-    /* TOPO */
 
     .top{
+
         align-items:center;
+
         margin-bottom:17px;
+
         gap:10px;
+
     }
 
+
     .title{
+
         min-width:0;
+
         gap:8px;
+
     }
+
 
     .mobile-logo{
         display:block;
         flex-shrink:0;
     }
 
+
     .mobile-logo img{
+
         width:43px;
+
         height:43px;
+
         border-radius:50%;
+
         object-fit:cover;
-        border:2px solid var(--marrom);
+
+        border:
+            2px solid
+            var(--marrom);
+
     }
+
 
     .title h2{
+
         font-size:22px;
+
         white-space:nowrap;
+
     }
+
 
     .title p{
+
         font-size:10px;
+
         white-space:nowrap;
+
         overflow:hidden;
+
         text-overflow:ellipsis;
+
         max-width:170px;
+
     }
 
+
     .month{
+
         padding:9px 8px;
+
         border-radius:10px;
+
         flex-shrink:0;
+
     }
+
 
     .month span{
         display:none;
     }
 
+
     .month select{
+
         max-width:105px;
+
         font-size:11px;
+
     }
 
-
-    /* CARDS */
 
     .cards{
-        grid-template-columns:1fr 1fr;
+
+        grid-template-columns:
+            1fr 1fr;
+
         gap:9px;
+
     }
 
+
     .card{
+
         padding:13px;
+
         min-height:95px;
+
         border-radius:14px;
+
     }
+
 
     .card small{
         font-size:10px;
     }
 
+
     .card strong{
+
         font-size:16px;
+
         margin-top:8px;
+
     }
+
 
     .icon{
+
         width:31px;
+
         height:31px;
+
         border-radius:9px;
+
         font-size:14px;
+
     }
 
-
-    /* PAINÉIS */
 
     .grid{
+
         grid-template-columns:1fr;
+
         gap:0;
+
         margin-top:12px;
+
     }
 
+
     .panel{
+
         padding:14px;
+
         border-radius:15px;
+
         margin-bottom:12px;
+
     }
+
 
     .head{
         margin-bottom:12px;
     }
 
+
     .head h3{
         font-size:14px;
     }
 
+
     .head .btn{
+
         font-size:11px;
+
         padding:9px 10px;
+
     }
 
-
-    /* GRÁFICO */
 
     .chart-panel{
         overflow:hidden;
     }
 
+
     .chart{
+
         height:190px;
+
         gap:2px;
+
         overflow-x:auto;
+
         padding-top:10px;
+
     }
+
 
     .barwrap{
         min-width:8px;
     }
 
+
     .bar{
+
         max-width:9px;
-        border-radius:4px 4px 1px 1px;
+
+        border-radius:
+            4px 4px 1px 1px;
+
     }
+
 
     .barlabel{
         font-size:7px;
     }
+
 
     .barvalue{
         display:none;
     }
 
 
-    /* RESUMO */
-
     .summary{
+
         font-size:12px;
+
         line-height:1.9;
+
     }
 
-
-    /* PRODUTOS */
 
     .products{
+
         grid-template-columns:1fr;
+
         gap:10px;
+
     }
 
+
     .product{
+
         padding:14px;
+
         border-radius:13px;
+
     }
+
 
     .product h4{
         font-size:16px;
     }
 
+
     .prices{
         font-size:11px;
     }
+
 
     .profit{
         font-size:12px;
     }
 
+
     .product-actions{
         gap:7px;
     }
 
+
     .product-actions .btn{
+
         padding:10px 8px;
+
         font-size:11px;
+
     }
 
 
-    /* TABELAS → CARDS */
+    /* TABELAS */
 
     table,
     tbody{
+
         display:block;
+
         width:100%;
+
     }
+
 
     table tr:first-child{
         display:none;
     }
 
+
     table tr{
+
         display:grid;
-        grid-template-columns:1fr auto;
+
+        grid-template-columns:
+            1fr auto;
+
         gap:4px 10px;
+
         padding:12px 0;
-        border-bottom:1px solid var(--borda);
+
+        border-bottom:
+            1px solid
+            var(--borda);
+
     }
+
 
     table td{
+
         border:0;
+
         padding:0;
+
         font-size:12px;
+
     }
+
 
     table td:nth-child(1){
+
         grid-column:1;
+
         color:var(--muted);
+
         font-size:10px;
+
     }
+
 
     table td:nth-child(2){
+
         grid-column:1;
+
         grid-row:2;
+
     }
+
 
     table td:nth-child(3){
+
         display:block;
+
         grid-column:1;
+
         grid-row:3;
+
         color:var(--muted);
+
         font-size:10px;
+
     }
+
 
     table td:nth-child(4){
+
         grid-column:2;
+
         grid-row:1 / span 2;
+
         align-self:center;
+
         font-weight:bold;
+
         color:var(--marrom3);
+
     }
+
 
     table td:nth-child(5){
+
         grid-column:2;
+
         grid-row:3;
+
         align-self:end;
+
     }
+
 
     table td:nth-child(5) .btn{
+
         padding:7px 9px;
+
         font-size:10px;
+
     }
 
-
-    /* ESCONDER BOTÃO DO DASHBOARD */
 
     .desktop-add{
         display:none;
@@ -949,65 +1740,159 @@ td strong{
     /* MODAIS */
 
     .modal{
+
         padding:10px;
+
         align-items:end;
+
     }
 
+
     .box{
+
         width:100%;
+
         max-height:90vh;
-        border-radius:20px 20px 12px 12px;
+
+        border-radius:
+            20px 20px 12px 12px;
+
         padding:18px;
-        animation:modalUp .2s ease;
+
+        animation:
+            modalUp .2s ease;
+
     }
+
 
     @keyframes modalUp{
 
         from{
-            transform:translateY(30px);
+
+            transform:
+                translateY(30px);
+
             opacity:0;
+
         }
 
         to{
-            transform:translateY(0);
+
+            transform:
+                translateY(0);
+
             opacity:1;
+
         }
 
     }
+
 
     .boxhead{
         margin-bottom:17px;
     }
 
+
     .boxhead h3{
         font-size:18px;
     }
 
+
     .form{
+
         grid-template-columns:1fr;
+
         gap:11px;
+
     }
+
 
     .full{
         grid-column:auto;
     }
 
+
     .field input,
     .field select{
+
         padding:13px;
+
         font-size:16px;
+
         min-height:46px;
+
     }
+
 
     .field label{
         font-size:11px;
     }
 
-    .actions{
-        margin-top:18px;
-        display:grid;
-        grid-template-columns:1fr 1fr;
+
+    /* ITENS VENDA MOBILE */
+
+    .sale-item{
+
+        grid-template-columns:
+            1fr 65px
+            80px 36px;
+
+        gap:6px;
+
+        padding:8px;
+
     }
+
+
+    .sale-item select,
+    .sale-item input{
+
+        padding:9px 6px;
+
+        font-size:13px;
+
+    }
+
+
+    .sale-item-total{
+
+        font-size:10px;
+
+    }
+
+
+    .remove-item{
+
+        width:32px;
+
+        height:32px;
+
+    }
+
+
+    .sale-total{
+
+        padding:13px;
+
+    }
+
+
+    .sale-total strong{
+        font-size:19px;
+    }
+
+
+    .actions{
+
+        margin-top:18px;
+
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
 
     .actions .btn{
         min-height:46px;
@@ -1017,72 +1902,117 @@ td strong{
     /* BOTÃO FLUTUANTE */
 
     .floating-btn{
+
         display:flex;
+
         position:fixed;
+
         right:17px;
+
         bottom:84px;
+
         width:55px;
+
         height:55px;
+
         border:0;
+
         border-radius:50%;
+
         background:var(--marrom);
+
         color:white;
+
         align-items:center;
+
         justify-content:center;
-        box-shadow:0 7px 20px rgba(93,64,51,.25);
+
+        box-shadow:
+            0 7px 20px
+            rgba(93,64,51,.25);
+
         z-index:20;
+
         cursor:pointer;
+
     }
+
 
     .floating-btn span{
-        font-size:30px;
-        font-weight:300;
-        line-height:1;
-    }
 
-    .floating-btn:active{
-        transform:scale(.94);
+        font-size:30px;
+
+        font-weight:300;
+
+        line-height:1;
+
     }
 
 }
 
 
-/* =========================
-   CELULARES MUITO PEQUENOS
-========================= */
+/* =========================================================
+   CELULARES PEQUENOS
+========================================================= */
 
 @media(max-width:380px){
 
     .main{
+
         padding-left:9px;
+
         padding-right:9px;
+
     }
+
 
     .title h2{
         font-size:19px;
     }
 
+
     .title p{
+
         max-width:135px;
+
     }
 
+
     .month select{
+
         max-width:90px;
+
         font-size:10px;
+
     }
+
 
     .card{
         padding:11px;
     }
 
+
     .card strong{
         font-size:14px;
     }
 
+
     .icon{
+
         width:27px;
+
         height:27px;
+
         font-size:12px;
+
+    }
+
+
+    .sale-item{
+
+        grid-template-columns:
+            1fr 55px 70px 32px;
+
     }
 
 }
