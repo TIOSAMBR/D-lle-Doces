@@ -72,10 +72,143 @@ button{
 
 .app{
 
-    display:flex;
+    display:none;
 
     min-height:100vh;
 
+}
+
+
+.app.authenticated{
+    display:flex;
+}
+
+/* =========================================================
+   🔐 TELA DE LOGIN
+========================================================= */
+
+/* Quando o usuário entra, a tela de login desaparece completamente. */
+.auth-gate[hidden]{
+    display:none !important;
+}
+
+.auth-gate{
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    box-sizing:border-box;
+    background:var(--creme2);
+}
+
+.auth-card{
+    width:min(100%, 420px);
+    padding:34px 30px 30px;
+    box-sizing:border-box;
+    background:var(--creme);
+    border:1px solid var(--borda);
+    border-radius:24px;
+    box-shadow:var(--sombra);
+    text-align:center;
+}
+
+.auth-logo{
+    width:92px;
+    height:92px;
+    object-fit:contain;
+    display:block;
+    margin:0 auto 14px;
+    border-radius:22px;
+}
+
+.auth-card h1{
+    margin:0;
+    color:var(--marrom3);
+    font-family:Georgia,serif;
+    font-size:28px;
+    font-weight:500;
+}
+
+.auth-subtitle{
+    margin:5px 0 25px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.auth-form{
+    text-align:left;
+}
+
+.auth-form label{
+    display:block;
+    margin:0 0 7px;
+    color:var(--marrom3);
+    font-size:13px;
+    font-weight:700;
+}
+
+.auth-form input{
+    width:100%;
+    height:50px;
+    padding:0 14px;
+    margin:0 0 15px;
+    box-sizing:border-box;
+    border:1px solid var(--borda);
+    border-radius:12px;
+    background:var(--creme2);
+    color:var(--texto);
+    outline:none;
+}
+
+.auth-form input:focus{
+    border-color:var(--marrom);
+    box-shadow:0 0 0 3px rgba(154,105,75,.10);
+}
+
+.auth-form button{
+    width:100%;
+    min-height:50px;
+    margin-top:2px;
+    border:0;
+    border-radius:12px;
+    background:var(--marrom);
+    color:var(--creme2);
+    font-weight:800;
+    cursor:pointer;
+}
+
+.auth-form button:active{
+    transform:translateY(1px);
+}
+
+.auth-form .cloud-message{
+    text-align:center;
+    min-height:18px;
+    margin-bottom:0;
+}
+
+@media(max-width:480px){
+    .auth-gate{
+        padding:18px;
+        align-items:center;
+    }
+
+    .auth-card{
+        padding:28px 20px 22px;
+        border-radius:20px;
+    }
+
+    .auth-logo{
+        width:78px;
+        height:78px;
+        border-radius:18px;
+    }
+
+    .auth-card h1{
+        font-size:25px;
+    }
 }
 
 
@@ -2015,4 +2148,318 @@ td strong{
 
     }
 
+}
+/* =========================================================
+   ☁️ FIREBASE / NUVEM
+========================================================= */
+
+.cloud-section{
+    margin:0 0 24px;
+    padding:22px;
+    background:var(--creme2);
+    border:1px solid var(--borda);
+    border-radius:18px;
+    box-shadow:var(--sombra);
+}
+
+.cloud-header{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:18px;
+    margin-bottom:18px;
+}
+
+.cloud-header h2{
+    margin:0 0 6px;
+    color:var(--marrom3);
+    font-family:Georgia,serif;
+    font-weight:500;
+}
+
+.cloud-header p{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.cloud-status{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 12px;
+    border-radius:999px;
+    background:var(--verde2);
+    color:var(--marrom3);
+    border:1px solid var(--borda);
+    font-size:12px;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.cloud-status.ok{
+    background:var(--verde2);
+    color:var(--verde);
+}
+
+.cloud-status.sync{
+    background:#F1E7DB;
+    color:var(--marrom);
+}
+
+.cloud-status.erro{
+    background:#F4DFDB;
+    color:var(--vermelho);
+}
+
+.cloud-login{
+    display:flex;
+    justify-content:center;
+}
+
+.cloud-form{
+    width:100%;
+    max-width:470px;
+    padding:20px;
+    background:var(--creme);
+    border:1px solid var(--borda);
+    border-radius:16px;
+}
+
+.cloud-form label{
+    display:block;
+    margin:0 0 6px;
+    color:var(--marrom3);
+    font-size:13px;
+    font-weight:700;
+}
+
+.cloud-form label + input{
+    margin-bottom:13px;
+}
+
+.cloud-form input{
+    width:100%;
+    height:46px;
+    padding:0 13px;
+    border:1px solid var(--borda);
+    border-radius:11px;
+    background:var(--creme2);
+    color:var(--texto);
+    outline:none;
+}
+
+.cloud-form input:focus{
+    border-color:var(--marrom);
+    box-shadow:0 0 0 3px rgba(154,105,75,.10);
+}
+
+.cloud-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.cloud-actions button{
+    border:0;
+    border-radius:11px;
+    padding:11px 16px;
+    min-height:43px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.cloud-actions button:not(.secondary){
+    flex:1;
+    background:var(--marrom);
+    color:var(--creme2);
+}
+
+.cloud-actions button.secondary{
+    background:var(--verde2);
+    color:var(--marrom3);
+}
+
+.cloud-message{
+    margin:11px 0 0;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.45;
+}
+
+.cloud-message.success{
+    color:var(--verde);
+}
+
+.cloud-message.error{
+    color:var(--vermelho);
+}
+
+.cloud-account{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:17px;
+    background:var(--creme);
+    border:1px solid var(--borda);
+    border-radius:15px;
+}
+
+.cloud-account > div:first-child{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.cloud-account strong{
+    color:var(--marrom3);
+}
+
+.cloud-account span{
+    color:var(--muted);
+    font-size:13px;
+    word-break:break-word;
+}
+
+.cloud-account .cloud-actions{
+    margin-top:0;
+}
+
+@media(max-width:700px){
+    .cloud-section{
+        padding:16px;
+        border-radius:15px;
+    }
+
+    .cloud-header{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .cloud-account{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .cloud-account .cloud-actions{
+        width:100%;
+    }
+
+    .cloud-account .cloud-actions button{
+        flex:1;
+    }
+}
+
+/* =========================================================
+   ☁️ SINCRONIZAÇÃO — RODAPÉ DISCRETO
+========================================================= */
+
+.cloud-footer{
+    margin:32px 0 0;
+    padding:14px 0 4px;
+    background:transparent;
+    border:0;
+    border-top:1px solid var(--borda);
+    border-radius:0;
+    box-shadow:none;
+}
+
+.cloud-footer .cloud-header{
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+}
+
+.cloud-footer .cloud-header h2{
+    margin:0;
+    font-family:inherit;
+    font-size:13px;
+    font-weight:700;
+    color:var(--muted);
+}
+
+.cloud-footer .cloud-header p{
+    display:none;
+}
+
+.cloud-footer .cloud-status{
+    padding:4px 8px;
+    background:transparent;
+    border:0;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:500;
+}
+
+.cloud-footer .cloud-account{
+    padding:8px 0 0;
+    background:transparent;
+    border:0;
+    border-radius:0;
+}
+
+.cloud-footer .cloud-account strong{
+    font-size:12px;
+    font-weight:600;
+    color:var(--muted);
+}
+
+.cloud-footer .cloud-account span{
+    font-size:11px;
+    color:var(--muted);
+    opacity:.8;
+}
+
+.cloud-footer .cloud-account .cloud-message{
+    margin:2px 0 0;
+    font-size:10px;
+    opacity:.7;
+}
+
+.cloud-footer .cloud-actions{
+    margin-top:0;
+    gap:6px;
+}
+
+.cloud-footer .cloud-actions button{
+    min-height:32px;
+    padding:6px 10px;
+    border:1px solid var(--borda);
+    background:transparent;
+    color:var(--muted);
+    border-radius:8px;
+    font-size:11px;
+    font-weight:500;
+}
+
+.cloud-footer .cloud-actions button:hover{
+    background:var(--verde2);
+    color:var(--marrom3);
+}
+
+@media(max-width:700px){
+    .cloud-footer{
+        margin-top:24px;
+        padding-top:12px;
+    }
+
+    .cloud-footer .cloud-header{
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+    }
+
+    .cloud-footer .cloud-account{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+
+    .cloud-footer .cloud-account .cloud-actions{
+        width:auto;
+    }
 }

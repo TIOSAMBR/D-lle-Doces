@@ -1,43 +1,39 @@
 const KEY = 'delleDocesFinanceiro';
+window.DELLE_DB_KEY = KEY;
 
 
 /* =========================================================
    BANCO DE DADOS
 ========================================================= */
 
+function createDefaultDelleDb() {
+    return {
+        products: [
+            { id: 1, name: 'Bolo gelado', price: 15, cost: 6 },
+            { id: 2, name: 'Bolo no pote', price: 15, cost: 7 },
+            { id: 3, name: 'Bolo em pedaço', price: 12, cost: 5 }
+        ],
+        sales: [],
+        expenses: []
+    };
+}
+
+window.createDefaultDelleDb = createDefaultDelleDb;
+
 let db =
     JSON.parse(localStorage.getItem(KEY) || 'null')
     ||
-    {
-        products: [
+    createDefaultDelleDb();
 
-            {
-                id: 1,
-                name: 'Bolo gelado',
-                price: 15,
-                cost: 6
-            },
 
-            {
-                id: 2,
-                name: 'Bolo no pote',
-                price: 15,
-                cost: 7
-            },
+window.db = db;
 
-            {
-                id: 3,
-                name: 'Bolo em pedaço',
-                price: 12,
-                cost: 5
-            }
-
-        ],
-
-        sales: [],
-
-        expenses: []
-    };
+// Substitui o conteúdo local pelos dados recebidos da nuvem sem recarregar a página.
+window.replaceDelleDb = function (remoteData) {
+    db.products = Array.isArray(remoteData.products) ? remoteData.products : [];
+    db.sales = Array.isArray(remoteData.sales) ? remoteData.sales : [];
+    db.expenses = Array.isArray(remoteData.expenses) ? remoteData.expenses : [];
+};
 
 
 /* =========================================================
@@ -63,11 +59,17 @@ const today = () =>
     new Date().toISOString().slice(0, 10);
 
 
-const save = () =>
+const save = () => {
     localStorage.setItem(
         KEY,
         JSON.stringify(db)
     );
+
+    // Sincroniza com o Firebase quando houver uma conta conectada.
+    if (window.DelleFirebase && window.DelleFirebase.isReady()) {
+        window.DelleFirebase.uploadCurrentData();
+    }
+};
 
 
 /* =========================================================
@@ -339,6 +341,8 @@ function render() {
     expenses(t.e);
 
 }
+
+window.render = render;
 
 
 /* =========================================================
@@ -1977,3 +1981,7 @@ document
 setup();
 
 render();
+
+if (window.DelleFirebase) {
+    window.DelleFirebase.init();
+}

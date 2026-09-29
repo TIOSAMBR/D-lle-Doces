@@ -9,6 +9,12 @@
         content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <meta name="theme-color" content="#9A694B">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Délle Doces">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-180.png">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🍰%3C/text%3E%3C/svg%3E">
 
     <title>Délle Doces — Gestão Financeira</title>
 
@@ -17,6 +23,29 @@
 </head>
 
 <body>
+
+<!-- =====================================================
+     TELA DE LOGIN
+====================================================== -->
+
+<div id="authGate" class="auth-gate">
+    <div class="auth-card">
+        <img src="logo-referencia.png" alt="Délle Doces" class="auth-logo">
+        <h1>Délle Doces</h1>
+        <p class="auth-subtitle">Gestão financeira</p>
+
+        <div class="auth-form">
+            <label for="cloudLoginEmail">E-mail</label>
+            <input id="cloudLoginEmail" type="email" autocomplete="username" placeholder="seu@email.com">
+
+            <label for="cloudLoginPassword">Senha</label>
+            <input id="cloudLoginPassword" type="password" autocomplete="current-password" placeholder="Sua senha">
+
+            <button id="cloudLoginButton" type="button">🔐 Entrar</button>
+            <p id="cloudMessage" class="cloud-message">Entre para acessar seu sistema.</p>
+        </div>
+    </div>
+</div>
 
 <div class="app">
 
@@ -403,6 +432,38 @@
             </div>
 
         </section>
+
+
+
+        <!-- =================================================
+             CONTA / SINCRONIZAÇÃO
+        ================================================== -->
+
+        <div class="cloud-section cloud-footer">
+
+            <div class="cloud-header">
+                <div>
+                    <h2>☁️ Sincronização</h2>
+                    <p>Seus dados estão protegidos e sincronizados automaticamente.</p>
+                </div>
+
+                <span id="cloudStatus" class="cloud-status">🔐 Não conectado</span>
+            </div>
+
+            <div id="cloudAccount" class="cloud-account" hidden>
+                <div>
+                    <strong>☁️ Conta conectada</strong>
+                    <span id="cloudEmail"></span>
+                    <p id="cloudAccountMessage" class="cloud-message">Atualização em tempo real ativada.</p>
+                </div>
+
+                <div class="cloud-actions">
+                    <button id="cloudSyncButton" type="button" class="secondary">🔄 Sincronizar</button>
+                    <button id="cloudLogoutButton" type="button" class="secondary">Sair</button>
+                </div>
+            </div>
+
+        </div>
 
     </main>
 
@@ -908,7 +969,19 @@
 </div>
 
 
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="firebase-sync.js"></script>
 <script src="script.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+    });
+}
+</script>
 
 </body>
 </html>
